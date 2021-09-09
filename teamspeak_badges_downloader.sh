@@ -8,16 +8,16 @@ curl https://badges-content.teamspeak.com/list > "$DIR"/teamspeak_badges_downloa
 
 # grab downloadlinks
 echo "Grabbing Download links"
-grep -oP 'http.?://\S+\"' "$DIR"/teamspeak_badges_downloader | sed 's/.$//' | sed -e 's/$/.svg/' | tr -d '"' > "$PUB"/teamspeak_badges_downloader.list
-grep -oP 'http.?://\S+\"' "$DIR"/teamspeak_badges_downloader | sed 's/.$//' | sed -e 's/$/_details.svg/' | tr -d '"' > "$PUB"/teamspeak_badges_downloader_details.list
+grep -oP 'http.?://\S+\"' "$DIR"/teamspeak_badges_downloader | sed 's/.$//' | sed -e 's/$/.svg/' | tr -d '"' > "$PUB"/teamspeak_badges_downloader.txt
+grep -oP 'http.?://\S+\"' "$DIR"/teamspeak_badges_downloader | sed 's/.$//' | sed -e 's/$/_details.svg/' | tr -d '"' > "$PUB"/teamspeak_badges_downloader_details.txt
 
 # genereate csv
 echo "Generating CSV files"
 echo "id;filename" > "$PUB"/id_filelist.csv
-sed 's/https:\/\/badges-content.teamspeak.com\///' "$PUB"/teamspeak_badges_downloader.list |sed 's/\//;/g' >> "$PUB"/id_filelist.csv
+sed 's/https:\/\/badges-content.teamspeak.com\///' "$PUB"/teamspeak_badges_downloader.txt |sed 's/\//;/g' >> "$PUB"/id_filelist.csv
 [ -z "$(tail -c1 "$PUB"/id_filelist.csv)" ] && truncate -s -1 "$PUB"/id_filelist.csv
 echo "id;filename" > "$PUB"/id_filelist_details.csv
-sed 's/https:\/\/badges-content.teamspeak.com\///' "$PUB"/teamspeak_badges_downloader_details.list | sed 's/\//;/g' >> "$PUB"/id_filelist_details.csv
+sed 's/https:\/\/badges-content.teamspeak.com\///' "$PUB"/teamspeak_badges_downloader_details.txt | sed 's/\//;/g' >> "$PUB"/id_filelist_details.csv
 [ -z "$(tail -c1 "$PUB"/id_filelist_details.csv)" ] && truncate -s -1 "$PUB"/id_filelist_details.csv
 
 # generate json
@@ -43,12 +43,12 @@ echo "Downloading Images..."
 while read url; do
   echo "${url##*/}" >> "$PUB"/filelist.txt
   curl -sL -O "$url"
-done < "$PUB"/teamspeak_badges_downloader.list
+done < "$PUB"/teamspeak_badges_downloader.txt
 
 while read url; do
   echo "${url##*/}" >> "$PUB"/filelist_details.txt
   curl -sL -O "$url"
-done < "$PUB"/teamspeak_badges_downloader_details.list
+done < "$PUB"/teamspeak_badges_downloader_details.txt
 
 # right owner
 chown -R www-data: "$PUB"
