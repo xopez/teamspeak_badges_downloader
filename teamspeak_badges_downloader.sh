@@ -1,6 +1,7 @@
 #!/bin/bash
 TMPDIR=/tmp
 PUB=/var/www/fs.mightful-noobs.de/teamspeak_badges
+OWNER="www-data"
 
 # download
 echo "Downloading the link list"
@@ -51,4 +52,4 @@ while read url; do
 done < "$TMPDIR"/teamspeak_badges_details_downloadlist.txt
 
 # right owner
-chown -R www-data: "$PUB"
+chown -R "$OWNER": "$PUB"
