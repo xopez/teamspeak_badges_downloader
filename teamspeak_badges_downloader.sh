@@ -46,17 +46,17 @@ jq --slurp --raw-input --raw-output \
 
 # actual download of files
 cd "$PUB"/badges  || exit
-truncate -s 0 "$PUB"/filelist.txt
-truncate -s 0 "$PUB"/filelist_details.txt
+truncate -s 0 "$TMPDIR"/filelist.txt
+truncate -s 0 "$TMPDIR"/filelist_details.txt
 
 echo "Downloading Images..."
 while read url; do
-  echo "${url##*/}" >> "$PUB"/filelist.txt
+  echo "${url##*/}" >> "$TMPDIR"/filelist.txt
   curl -sL -O "$url"
 done < "$TMPDIR"/teamspeak_badges_downloadlist.txt
 
 while read url; do
-  echo "${url##*/}" >> "$PUB"/filelist_details.txt
+  echo "${url##*/}" >> "$TMPDIR"/filelist_details.txt
   curl -sL -O "$url"
 done < "$TMPDIR"/teamspeak_badges_details_downloadlist.txt
 
