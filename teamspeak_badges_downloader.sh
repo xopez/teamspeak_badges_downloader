@@ -6,8 +6,8 @@ PUB=/var/www/fs.mightful-noobs.de/teamspeak_badges
 curl https://badges-content.teamspeak.com/list > "$DIR"/teamspeak_badges_downloader
 
 # grep downloadlinks
-grep -oP 'http.?://\S+\"' "$DIR"/teamspeak_badges_downloader | sed 's/.$//' | sed -e 's/$/.svg/' | tr -d '"' | tee "$PUB" /teamspeak_badges_downloader.list
-grep -oP 'http.?://\S+\"' "$DIR"/teamspeak_badges_downloader | sed 's/.$//' | sed -e 's/$/_details.svg/' | tr -d '"' | tee "$PUB" /teamspeak_badges_downloader_details.list
+grep -oP 'http.?://\S+\"' "$DIR"/teamspeak_badges_downloader | sed 's/.$//' | sed -e 's/$/.svg/' | tr -d '"' | tee "$PUB"/teamspeak_badges_downloader.list
+grep -oP 'http.?://\S+\"' "$DIR"/teamspeak_badges_downloader | sed 's/.$//' | sed -e 's/$/_details.svg/' | tr -d '"' | tee "$PUB"/teamspeak_badges_downloader_details.list
 
 # genereate csv
 echo "id;filename" | tee "$PUB"/id_filelist.csv
